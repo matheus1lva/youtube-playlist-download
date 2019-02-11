@@ -32,7 +32,7 @@ class PlaylistDownload {
     const MP3fileName = videoFilename.replace(regex, '.mp3');
 
     const mp4 = `${this.options.outputFolder}/mp4/${videoFilename}`;
-    const mp3 = this.options.outputFolder + MP3fileName;
+    const mp3 = `${this.options.outputFolder}/${MP3fileName}`;
 
     return new Promise((resolve, reject) => {
       exec(`ffmpeg -i "${mp4}" "${mp3}"`, (error) => {
@@ -117,7 +117,7 @@ class PlaylistDownload {
     const playlistVideos = await this.fetchPlaylistVideos();
 
     playlistVideos.forEach(async (video) => {
-      const videoInfo = this.fetchVidInfo(video);
+      const videoInfo = await this.fetchVidInfo(video);
       await this.downloadVideo(video, videoInfo);
     });
   }
