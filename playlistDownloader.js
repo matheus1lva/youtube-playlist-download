@@ -1,6 +1,7 @@
 const { exec } = require('child_process');
 
 const path = require('path');
+const os = require('os');
 
 const fs = require('fs');
 
@@ -16,6 +17,12 @@ class PlaylistDownload {
       ...options,
       mp4FolderPath: path.resolve(options.outputFolder, 'mp4')
     };
+  }
+
+  static getCorrectFFMPEGBinaryPath() {
+    const platform = os.platform();
+    const architecture = os.arch();
+    return `${platform}-${architecture}`;
   }
 
   async fetchPlaylistVideos() {
@@ -34,8 +41,14 @@ class PlaylistDownload {
     const mp4 = `${this.options.outputFolder}/mp4/${videoFilename}`;
     const mp3 = `${this.options.outputFolder}/${MP3fileName}`;
 
+    const ffmpegDistFolder = PlaylistDownload.getCorrectFFMPEGBinaryPath();
+
+    const ffmpegBinary = path.resolve(
+      path.join(__dirname, 'node_modules', '@ffmpeg-installer', ffmpegDistFolder, 'ffmpeg')
+    );
+
     return new Promise((resolve, reject) => {
-      exec(`ffmpeg -i "${mp4}" "${mp3}"`, (error) => {
+      exec(`${ffmpegBinary} -i "${mp4}" "${mp3}"`, (error) => {
         if (error !== null) {
           reject(error);
         }
@@ -116,10 +129,19 @@ class PlaylistDownload {
 
     const playlistVideos = await this.fetchPlaylistVideos();
 
-    playlistVideos.forEach(async (video) => {
+    const videosConvertedAndDownloaded = playlistVideos.map(async (video) => {
       const videoInfo = await this.fetchVidInfo(video);
-      await this.downloadVideo(video, videoInfo);
+      return this.downloadVideo(video, videoInfo);
     });
+
+    Promise.all(videosConvertedAndDownloaded)
+      .then(() => {
+        console.log('DONE!');
+        process.exit(0);
+      })
+      .catch((err) => {
+        console.log('ERR', err);
+      });
   }
 }
 

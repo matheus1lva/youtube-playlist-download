@@ -1,14 +1,11 @@
 {
   "name": "youtube-playlist-download",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["youtube-download", "youtube-playlist", "dowload", "mp3"],
+  "author": "PlayMa256 <matheus.g.silva@hotmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.17",
     "chalk": "^2.4.2",
