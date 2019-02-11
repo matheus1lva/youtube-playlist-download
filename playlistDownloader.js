@@ -123,47 +123,4 @@ class PlaylistDownload {
   }
 }
 
-// ytlist('https://www.youtube.com/playlist?list=PLGEL0vaf2SSFu12LIEyRd2ya29yGllnGe', 'url').then((res) => {
-//   const videos = res.data.playlist;
-//   videos.forEach((video) => {
-//     const videoId = video.split('v=')[1];
-//     youtubeFetchVideoInfo(videoId, (err, videoInfo) => {
-//       const title = videoInfo.title;
-
-//       const videoDownload = youtubedl(video);
-//       let size = 0;
-//       videoDownload.on('error', (err) => {
-//         console.log(`Error 2:  ${err}`);
-//         callback();
-//       });
-
-//       videoDownload.on('info', (info) => {
-//         size = info.size;
-//         videoDownload.pipe(fs.createWriteStream(path.resolve(__dirname, 'mp4', sanitize(`${title}.mp4`))));
-//       });
-
-//       let pos = 0;
-//       videoDownload.on('data', (data) => {
-//         pos += data.length;
-//         if (size) {
-//           const percent = (pos / size * 100).toFixed(2);
-//           if (percent == 100) {
-//             return 0;
-//           }
-
-//           process.stdout.cursorTo(0);
-//           process.stdout.clearLine(1);
-//           process.stdout.write(`${percent}%`);
-//         }
-//       });
-
-//       videoDownload.on('end', () => {
-//         process.stdout.cursorTo(0);
-//         process.stdout.clearLine(1);
-//         process.stdout.write('---Complete \n');
-//       });
-//     });
-//   });
-// });
-
 module.exports = { PlaylistDownload };
