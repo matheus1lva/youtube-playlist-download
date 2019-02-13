@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const ytlist = require('youtube-playlist');
 const youtubedl = require('youtube-dl');
+const chalk = require('chalk');
 
 const youtubeFetchVideoInfo = require('youtube-info');
 const sanitize = require('sanitize-filename');
@@ -53,7 +54,7 @@ class PlaylistDownload {
           reject(error);
         }
         this.deleteVideo(videoFilename);
-        process.stdout.write('-- Mp3 converted successfully -- \n');
+        console.log(chalk.blue(`-- ${MP3fileName} converted successfully -- \n`));
         resolve();
       });
     });
@@ -93,7 +94,7 @@ class PlaylistDownload {
       videoDownload.on('info', ({ size: downloadSize }) => {
         size = downloadSize;
         videoDownload.pipe(fs.createWriteStream(path.resolve(videoFolder, mp4TitleWithExtension)));
-        process.stdout.write(`Downloading "${title}"`);
+        console.log(chalk.green(`\n-- Downloading "${title}" --\n`));
       });
 
       let pos = 0;
@@ -114,8 +115,8 @@ class PlaylistDownload {
       videoDownload.on('end', async () => {
         process.stdout.cursorTo(0);
         process.stdout.clearLine(1);
-        process.stdout.write(`-- ${title} Downloaded successfully -- \n`);
-        process.stdout.write(`-- Converting ${title} to mp3 -- \n`);
+        console.log(chalk.green(`-- ${title} Downloaded successfully -- \n`));
+        console.log(chalk.green(`-- Converting ${title} to mp3 -- \n`));
         await this.parseMp3(mp4TitleWithExtension);
         resolve();
       });
@@ -136,11 +137,11 @@ class PlaylistDownload {
 
     Promise.all(videosConvertedAndDownloaded)
       .then(() => {
-        console.log('DONE!');
+        console.log(chalk.blue('Everything is downloaded!'));
         process.exit(0);
       })
       .catch((err) => {
-        console.log('ERR', err);
+        console.log(chalk.red('ERR', err));
       });
   }
 }
