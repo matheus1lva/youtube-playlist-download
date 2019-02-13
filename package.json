@@ -1,11 +1,20 @@
 {
-  "name": "youtube-playlist-download",
+  "name": "youtube-playlist-dld",
   "version": "0.0.1",
   "description": "",
+  "bin": {
+    "youtube-playlist-dld": "./index.js"
+  },
   "main": "index.js",
   "keywords": ["youtube-download", "youtube-playlist", "dowload", "mp3"],
   "author": "PlayMa256 <matheus.g.silva@hotmail.com>",
   "license": "MIT",
+  "files": [
+    "index.js",
+    "playlistDownloader.js",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.17",
     "chalk": "^2.4.2",
