@@ -1,6 +1,6 @@
 {
   "name": "youtube-playlist-dld",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "bin": {
     "youtube-playlist-dld": "./index.js"
