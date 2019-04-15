@@ -53,7 +53,11 @@ class PlaylistDownload {
         if (error !== null) {
           reject(error);
         }
-        this.deleteVideo(videoFilename);
+        try {
+          this.deleteVideo(videoFilename);
+        } catch (err) {
+          console.log(chalk.red(err));
+        }
         console.log(chalk.blue(`-- ${MP3fileName} converted successfully -- \n`));
         resolve();
       });
