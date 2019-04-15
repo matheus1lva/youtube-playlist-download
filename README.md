@@ -12,6 +12,3 @@ It downloads all the songs from the playlist. All you need to do to install is:
 For e.g.: `youtube-playlist-dld http://youtube.com/aosidjaoisjd ./cool-musics`
 
 It uses `ffmpeg` under the hood, which is installed on the fly based on the OS and architecture you have.
-
-## Copyright
-Matheus Gonçalves da Silva <PlayMa256>
